@@ -7,3 +7,4 @@ outputs.zip
 oci-config
 secrets.tf
 values.tfvars
+Shared/*.tfvars

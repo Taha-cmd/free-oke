@@ -1,0 +1,5 @@
+root_compartment_id = ""
+region              = ""
+private_key_path    = "" # path is relative from the module, not from the location of this file!
+user_ocid           = ""
+fingerprint         = ""
