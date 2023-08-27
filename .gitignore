@@ -1,5 +1,6 @@
 *.tfstate*
-outputs*
+outputs
+outputs.zip
 *.pem
 *.crt
 .terraform

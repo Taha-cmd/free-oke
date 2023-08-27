@@ -43,22 +43,20 @@ provider "oci" {
   private_key_path = local.private_key_path
 }
 
-# TODO: come up with a better way
-# either use kubeconfig or figure out how to output the ca data
 provider "helm" {
   kubernetes {
-    host     = oci_containerengine_cluster.oke_cluster.endpoints[0].public_endpoint
-    insecure = true
-    exec {
-      api_version = "client.authentication.k8s.io/v1beta1"
-      command     = "oci"
-      args        = ["ce", "cluster", "generate-token", "--cluster-id", oci_containerengine_cluster.oke_cluster.id, "--region", local.region]
-    }
+    config_path = "${local.shared_output_directory}/kubeconfig"
   }
 }
 
-# TODO: make this work for greenfield
 provider "kubernetes" {
-  config_path    = "${local.artifact_output_directory}/kubeconfig"
-  config_context = "context-ctbuzrzsvha"
+  config_path = "${local.shared_output_directory}/kubeconfig"
+}
+
+data "terraform_remote_state" "oke" {
+  backend = "local"
+
+  config = {
+    path = "${path.module}/../oke/terraform.tfstate"
+  }
 }

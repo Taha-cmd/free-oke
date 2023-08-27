@@ -13,7 +13,7 @@ locals {
           "service.beta.kubernetes.io/oci-load-balancer-shape-flex-min" = "10"
           "service.beta.kubernetes.io/oci-load-balancer-shape-flex-max" = "10"
           "service.beta.kubernetes.io/oci-load-balancer-internal"       = "false"
-          "service.beta.kubernetes.io/oci-load-balancer-subnet1"        = "${oci_core_subnet.oke_subnets["oke-services"].id}"
+          "service.beta.kubernetes.io/oci-load-balancer-subnet1"        = data.terraform_remote_state.oke.outputs.k8s_services_subnet_id
         }
       }
     }

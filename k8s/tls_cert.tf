@@ -45,11 +45,3 @@ resource "tls_locally_signed_cert" "tls_cert" {
   set_subject_key_id    = true
   validity_period_hours = 24 * 30 * 12 * 5 # 5 years
 }
-
-output "top_level_domain" {
-  value = tls_self_signed_cert.root_ca.subject[0].common_name
-}
-
-output "root_ca_file_path" {
-  value = local_sensitive_file.root_ca.filename
-}
