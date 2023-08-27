@@ -1,4 +1,7 @@
 locals {
+
+  vcn_cidr_block = "10.0.0.0/16"
+
   subnets = {
     # for k8s LoadBalancer services
     "oke-services" = {

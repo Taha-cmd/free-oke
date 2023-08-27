@@ -1,10 +1,10 @@
 resource "oci_core_vcn" "vcn" {
   compartment_id = oci_identity_compartment.compartment.id
   cidr_blocks = [
-    "10.0.0.0/16"
+    local.vcn_cidr_block
   ]
 
-  display_name   = "vcn"
+  display_name   = "oke-vcn"
   dns_label      = "vcn"
   is_ipv6enabled = false
 }
