@@ -25,10 +25,16 @@ terraform {
 
 # https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/terraformproviderconfiguration.htm
 provider "oci" {
-  tenancy_ocid     = local.tenancy_ocid
-  user_ocid        = local.user_ocid
-  region           = local.region
-  auth             = local.auth
-  fingerprint      = local.fingerprint
-  private_key_path = local.private_key_path
+  tenancy_ocid     = var.root_compartment_id
+  user_ocid        = var.user_ocid
+  region           = var.region
+  auth             = "APIKey"
+  fingerprint      = var.fingerprint
+  private_key_path = var.private_key_path
+}
+
+resource "oci_identity_compartment" "compartment" {
+  compartment_id = var.root_compartment_id
+  name           = "oke"
+  description    = "Dedicated compartment to host an oke instance and all its related infrastructure"
 }

@@ -1,28 +1,23 @@
-locals {
-  compartment_id = "ocid1.compartment.oc1..aaaaaaaamgkbqra6ewtuwr5pahyfvyeobhoxq7nzwjsj6hwkv42kviyvbqya"
-  region         = "eu-frankfurt-1"
-}
-
 resource "oci_core_vcn" "vcn" {
-  compartment_id = local.compartment_id
+  compartment_id = oci_identity_compartment.compartment.id
   cidr_blocks = [
     "10.0.0.0/16"
   ]
 
   display_name   = "vcn"
   dns_label      = "vcn"
-  is_ipv6enabled = "false"
+  is_ipv6enabled = false
 }
 
 resource "oci_core_internet_gateway" "internet_gateway" {
-  compartment_id = local.compartment_id
+  compartment_id = oci_identity_compartment.compartment.id
   display_name   = "internet-gateway"
   enabled        = true
   vcn_id         = oci_core_vcn.vcn.id
 }
 
 resource "oci_core_route_table" "route_table" {
-  compartment_id = local.compartment_id
+  compartment_id = oci_identity_compartment.compartment.id
   vcn_id         = oci_core_vcn.vcn.id
   display_name   = "route-table"
   route_rules {
@@ -33,7 +28,7 @@ resource "oci_core_route_table" "route_table" {
 }
 
 resource "oci_core_security_list" "security_list" {
-  compartment_id = local.compartment_id
+  compartment_id = oci_identity_compartment.compartment.id
   display_name   = "allow-all"
   vcn_id         = oci_core_vcn.vcn.id
   ingress_security_rules {
@@ -51,25 +46,10 @@ resource "oci_core_security_list" "security_list" {
 
 resource "oci_core_subnet" "oke_subnets" {
 
-  for_each = {
-    "oke-services" = {
-      dns_label  = "services"
-      cidr_block = "10.0.4.0/24"
-    }
-
-    "oke-workers" = {
-      dns_label  = "workers"
-      cidr_block = "10.0.5.0/24"
-    }
-
-    "oke-control-plane" = {
-      dns_label  = "control"
-      cidr_block = "10.0.6.0/24"
-    }
-  }
+  for_each = local.subnets
 
   display_name   = each.key
-  compartment_id = local.compartment_id
+  compartment_id = oci_identity_compartment.compartment.id
   cidr_block     = each.value.cidr_block
 
   dns_label                  = each.value.dns_label

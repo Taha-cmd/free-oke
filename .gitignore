@@ -6,3 +6,4 @@ outputs.zip
 .terraform
 oci-config
 secrets.tf
+values.tfvars
