@@ -1,0 +1,7 @@
+*.tfstate*
+outputs*
+*.pem
+*.crt
+.terraform
+oci-config
+secrets.tf
