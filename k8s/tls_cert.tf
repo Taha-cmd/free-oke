@@ -7,8 +7,8 @@ resource "tls_self_signed_cert" "root_ca" {
   private_key_pem = tls_private_key.root_ca_private_key.private_key_pem
 
   subject {
-    common_name  = "taha.dev"
-    organization = "Taha's org"
+    common_name  = var.top_level_domain
+    organization = var.organization_name
   }
 
   allowed_uses = ["cert_signing"]
@@ -26,12 +26,12 @@ resource "tls_cert_request" "tls_cert_signing_request" {
   private_key_pem = tls_private_key.tls_cert_private_key.private_key_pem #
 
   subject {
-    common_name  = "*.taha.dev"
-    organization = "Taha's org"
+    common_name  = local.tls_cert_subject_name
+    organization = var.organization_name
   }
 
-  dns_names = ["taha.dev", "*.taha.dev"]
-  uris      = ["https://taha.dev", "https://*.taha.dev"]
+  dns_names = local.tls_cert_dns_names
+  uris      = local.tls_cert_uris
 }
 
 resource "tls_locally_signed_cert" "tls_cert" {

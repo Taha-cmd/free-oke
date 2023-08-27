@@ -1,25 +1,3 @@
-# We get one free load balancer with 10 Mbps min/max bandwidth
-
-locals {
-  # https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
-  ingress_controller_values = {
-    controller = {
-      service = {
-        # These annotations will provision a load balancer for us
-        # https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengcreatingloadbalancer.htm#contengcreatingloadbalancer_topic_Summaryofannotations
-        annotations = {
-          "oci.oraclecloud.com/load-balancer-type"                      = "lb"
-          "service.beta.kubernetes.io/oci-load-balancer-shape"          = "flexible"
-          "service.beta.kubernetes.io/oci-load-balancer-shape-flex-min" = "10"
-          "service.beta.kubernetes.io/oci-load-balancer-shape-flex-max" = "10"
-          "service.beta.kubernetes.io/oci-load-balancer-internal"       = "false"
-          "service.beta.kubernetes.io/oci-load-balancer-subnet1"        = data.terraform_remote_state.oke.outputs.k8s_services_subnet_id
-        }
-      }
-    }
-  }
-}
-
 resource "helm_release" "nginx_ingress_controller" {
   name             = "nginx-ingress-controller"
   repository       = "https://kubernetes.github.io/ingress-nginx"
@@ -35,7 +13,7 @@ resource "helm_release" "nginx_ingress_controller" {
 
 data "oci_load_balancers" "load_balancer" {
   depends_on     = [helm_release.nginx_ingress_controller]
-  compartment_id = local.compartment_id
+  compartment_id = data.terraform_remote_state.oke.outputs.compartment_id
 
   lifecycle {
     postcondition {
@@ -50,16 +28,8 @@ data "oci_load_balancers" "load_balancer" {
   }
 }
 
-output "load_balancer_ip" {
-  value = data.oci_load_balancers.load_balancer.load_balancers[0].ip_address_details[0].ip_address
-}
-
-locals {
-  kubernetes_namespaces = ["workloads", "dev1", "dev2"]
-}
-
 resource "kubernetes_namespace_v1" "kubernetes_namespaces" {
-  for_each = toset(local.kubernetes_namespaces)
+  for_each = toset(var.kubernetes_namespaces)
 
   metadata {
     name = each.key
@@ -67,7 +37,7 @@ resource "kubernetes_namespace_v1" "kubernetes_namespaces" {
 }
 
 resource "kubernetes_secret_v1" "nginx_tls_secret" {
-  for_each = toset(local.kubernetes_namespaces)
+  for_each = toset(var.kubernetes_namespaces)
 
   type = "kubernetes.io/tls"
 

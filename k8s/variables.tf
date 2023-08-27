@@ -21,3 +21,24 @@ variable "fingerprint" {
 variable "region" {
   type = string
 }
+
+variable "top_level_domain" {
+  description = "The top level domain to create a wildcard tls certificate for. For example, if you enter example.com, then a wildcard certificate for *.example.com will be created"
+  type        = string
+}
+
+variable "organization_name" {
+  description = "The organization name to use for the self signed root ca"
+  type        = string
+  default     = "Oke playground"
+}
+
+variable "kubernetes_namespaces" {
+  description = "Kubernetes namespaces to create. Also note that the the created tls certificate will be automatically uploaded to these namespace to be picked up by the ingress controller"
+  type        = set(string)
+
+  validation {
+    condition = length(var.kubernetes_namespaces) >= 1
+    error_message = "There must be at least one kubernetes namespace"
+  }
+}

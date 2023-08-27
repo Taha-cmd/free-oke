@@ -25,11 +25,6 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "2.23.0"
     }
-
-    archive = {
-      source  = "hashicorp/archive"
-      version = "2.4.0"
-    }
   }
 }
 
@@ -57,6 +52,6 @@ data "terraform_remote_state" "oke" {
   backend = "local"
 
   config = {
-    path = "${path.module}/../oke/terraform.tfstate"
+    path = abspath("${path.module}/../oke/terraform.tfstate")
   }
 }

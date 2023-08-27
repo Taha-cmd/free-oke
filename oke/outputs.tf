@@ -21,3 +21,7 @@ output "cluster_public_endpoint" {
 output "compartment_id" {
   value = oci_identity_compartment.compartment.id
 }
+
+output "region" {
+  value = var.region
+}
