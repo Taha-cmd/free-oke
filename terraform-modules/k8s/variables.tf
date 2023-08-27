@@ -38,7 +38,12 @@ variable "kubernetes_namespaces" {
   type        = set(string)
 
   validation {
-    condition = length(var.kubernetes_namespaces) >= 1
+    condition     = length(var.kubernetes_namespaces) >= 1
     error_message = "There must be at least one kubernetes namespace"
   }
+}
+
+variable "shared_output_directory" {
+  description = "path to output useful generated files into"
+  type        = string
 }

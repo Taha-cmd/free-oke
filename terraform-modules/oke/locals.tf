@@ -1,7 +1,4 @@
 locals {
-  # output any generated files into this path (kubeconfig, ssh keys etc)
-  shared_output_directory = "${path.module}/../outputs"
-
   subnets = {
     # for k8s LoadBalancer services
     "oke-services" = {

@@ -1,0 +1,1 @@
+shared_output_directory = "../../outputs" # Path is relative from the module, not from this location!

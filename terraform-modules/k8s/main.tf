@@ -40,12 +40,12 @@ provider "oci" {
 
 provider "helm" {
   kubernetes {
-    config_path = "${local.shared_output_directory}/kubeconfig"
+    config_path = "${var.shared_output_directory}/kubeconfig"
   }
 }
 
 provider "kubernetes" {
-  config_path = "${local.shared_output_directory}/kubeconfig"
+  config_path = "${var.shared_output_directory}/kubeconfig"
 }
 
 data "terraform_remote_state" "oke" {

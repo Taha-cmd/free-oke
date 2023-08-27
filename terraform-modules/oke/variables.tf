@@ -39,3 +39,8 @@ variable "node_count" {
     error_message = "Node count must be between 1 and 4"
   }
 }
+
+variable "shared_output_directory" {
+  description = "path to output useful generated files into"
+  type = string
+}

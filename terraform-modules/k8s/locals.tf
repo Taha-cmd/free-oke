@@ -1,7 +1,4 @@
 locals {
-  # output any generated files into this path (kubeconfig, ssh keys etc)
-  shared_output_directory = abspath("${path.module}/../outputs")
-
   tls_cert_subject_name = "*.${var.top_level_domain}"
   tls_cert_dns_names    = [var.top_level_domain, local.tls_cert_subject_name]
   tls_cert_uris         = [for host in local.tls_cert_dns_names : "https://${host}"]
