@@ -1,5 +1,12 @@
 TODO
 
+Prerequisites:
+* windows
+* oci cli & account
+* terraform
+* powershell
+* kubectl (optional)
+
 ```ps1
     # Deploy the oci infrastructure
     & Deploy-Module.ps1 -Module oke

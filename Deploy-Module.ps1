@@ -8,4 +8,5 @@ $private:sharedDir = Join-Path $PSScriptRoot "Shared"
 $private:modulePath = Join-path $PSScriptRoot $Module
 
 $env:TF_LOG = $LogLevel
+terraform -chdir="$modulePath" init
 terraform -chdir="$modulePath" apply -var-file="$sharedDir/oci.tfvars" -var-file="$modulePath/values.tfvars"
