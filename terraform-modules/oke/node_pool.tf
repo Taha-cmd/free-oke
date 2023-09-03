@@ -13,7 +13,7 @@ resource "oci_containerengine_node_pool" "oke_node_pool" {
   node_config_details {
 
     node_pool_pod_network_option_details {
-      cni_type = "FLANNEL_OVERLAY"
+      cni_type = oci_containerengine_cluster.oke_cluster.cluster_pod_network_options[0].cni_type
     }
 
     placement_configs {

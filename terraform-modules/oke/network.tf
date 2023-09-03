@@ -9,6 +9,12 @@ resource "oci_core_vcn" "vcn" {
   is_ipv6enabled = false
 }
 
+# There are two options to enable outbound traffic in a vcn:
+# 1) private subnet + nat gateway
+# 2) public subnet + internet gateway
+# The first option is the prefered one from a security perspective
+# However, a gateway, although free, requires a paid account
+# Therefore, we go the second option
 resource "oci_core_internet_gateway" "internet_gateway" {
   compartment_id = oci_identity_compartment.compartment.id
   display_name   = "internet-gateway"
@@ -27,6 +33,7 @@ resource "oci_core_route_table" "route_table" {
   }
 }
 
+# We might consider restricting this :/
 resource "oci_core_security_list" "security_list" {
   compartment_id = oci_identity_compartment.compartment.id
   display_name   = "allow-all"

@@ -44,3 +44,8 @@ variable "shared_output_directory" {
   description = "path to output useful generated files into"
   type = string
 }
+
+variable "kubernetes_version" {
+  description = "See https://docs.oracle.com/en-us/iaas/Content/ContEng/Concepts/contengaboutk8sversions.htm for a list of supported version"
+  type = string
+}

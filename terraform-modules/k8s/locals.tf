@@ -9,7 +9,7 @@ locals {
   ingress_controller_values = {
     controller = {
       service = {
-        # These annotations will provision a load balancer for us
+        # These annotations will provision a load balancer for us within the free tier allowed values
         # https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengcreatingloadbalancer.htm#contengcreatingloadbalancer_topic_Summaryofannotations
         annotations = {
           "oci.oraclecloud.com/load-balancer-type"                      = "lb"

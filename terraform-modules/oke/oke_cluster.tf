@@ -5,8 +5,11 @@ data "oci_identity_availability_domains" "availability_domains" {
 resource "oci_containerengine_cluster" "oke_cluster" {
   compartment_id = oci_identity_compartment.compartment.id
   name           = "oke-cluster"
-  
+
   cluster_pod_network_options {
+    # With FLANNEL, every pod gets assigned an IP from a cluster-internal network
+    # The VCN-native cni will assign every pod an IP from the actual subnet, which will require a NAT gateway for outbound traffic
+    # But NAT gateways can only be created in paid accounts
     cni_type = "FLANNEL_OVERLAY"
   }
 
@@ -15,7 +18,7 @@ resource "oci_containerengine_cluster" "oke_cluster" {
     subnet_id            = oci_core_subnet.oke_subnets["oke-control-plane"].id
   }
 
-  kubernetes_version = "v1.27.2"
+  kubernetes_version = var.kubernetes_version
 
   vcn_id = oci_core_vcn.vcn.id
   type   = "BASIC_CLUSTER"

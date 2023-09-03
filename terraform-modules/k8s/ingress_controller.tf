@@ -1,3 +1,7 @@
+# We get one free load balancer. Every kubernetes LoadBalancer service will provisions its own load balancer
+# -> we only get to create one LoadBalancer service. Let's not put that to waste and expose an ingress controller behind 
+# the one load balancer we have. Our workload need to be exposed as ClusterIP + Ingress
+
 resource "helm_release" "nginx_ingress_controller" {
   name             = "nginx-ingress-controller"
   repository       = "https://kubernetes.github.io/ingress-nginx"

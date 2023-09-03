@@ -1,2 +1,3 @@
-compartment_name = "oke"
-node_count       = 2
+compartment_name   = "oke"
+node_count         = 2
+kubernetes_version = "v1.27.2"
