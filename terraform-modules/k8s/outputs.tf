@@ -13,3 +13,7 @@ output "load_balancer_ip" {
 output "sample_ingress_app_file_path" {
   value = abspath(local_file.sample_ingress_app.filename)
 }
+
+output "tls_secret_name" {
+  value = values(kubernetes_secret_v1.nginx_tls_secret)[0].metadata[0].name
+}
