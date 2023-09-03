@@ -3,6 +3,9 @@ A bunch of **very opinionated** terraform modules and helper scripts to set up a
 ## Motivation
 The goal of this project is mainly to mess around and learn more about Terraform, Kubernetes and different cloud providers.
 
+# :exclamation: IMPORTANT :exclamation:
+This is intended for development and experimenting only! The provisioned infrastructure does not follow security best practices! Avoid using sensitive data!
+
 ## Prerequisites:
 * oci cli & account
 * terraform
