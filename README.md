@@ -1,4 +1,7 @@
-A bunch of **very opinionated** terraform modules and helper scripts to set up a free kubernetes cluster in the oracle cloud using only resources included in the [free tier](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm). The emphasis is on **very opinionated** because there isn't much room for configurability in the free tier.
+A bunch of **very opinionated** terraform modules and helper scripts to set up a free kubernetes cluster in the oracle cloud using only resources included in the [free tier](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm). The emphasis is on **very opinionated** because there isn't much room for configurability in the free tier. 
+
+## Motivation
+The goal of this project is mainly to mess around and learn more about Terraform, Kubernetes and different cloud providers.
 
 ## Prerequisites:
 * oci cli & account
