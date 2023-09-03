@@ -20,11 +20,12 @@ Assuming that all prerequisites are met, follow these steps:
     # Deploy the k8s infrastructure
     & Deploy-Module.ps1 -Module k8s
 ```
-* If you have a domain somewhere, point it to load balancer IP to reach the ingress controller. You can use LetsEncrypt for https and maybe [external dns](https://github.com/kubernetes-sigs/external-dns) to automate the creation of dns entries. If you don't, follow the next steps:
+* If you have a domain somewhere, point it to the load balancer IP to reach the ingress controller. You can use LetsEncrypt for https and maybe [external dns](https://github.com/kubernetes-sigs/external-dns) to automate the creation of dns entries. If you don't, follow the next steps:
 
 ```ps1
     # Import the self signed trusted root certificate to enable https.
-    # A tls certificate signed by this root CA was created by the k8s module and uploaded as a secret to the created kubernetes namespace
+    # A tls certificate signed by this root CA was created by the k8s module and uploaded as a secret to the 
+    # created kubernetes namespace
     # You can now create ingress resources within these namespace and reference the secret for https
     # Requires elevated permissions
     & terraform-modules/k8s/Import-RootCA.ps1
