@@ -7,7 +7,7 @@ A bunch of **very opinionated** terraform modules and helper scripts to set up a
 * kubectl (optional)
 
 ## Repository Structure
-Under terraform modules, there is a __shared-config__ folder and, currently, two terraform modules __oke__ and __k8s__. __oke__ creates the required infrastructure in the oracle cloud and __k8s__ installs an ingress controller and sets up a load balancer to enable inbound traffic. It also help contains optional scripts to help with https and dns. Use the __Deploy-Module.ps1__ script to deploy the modules (see sample below).
+Under terraform modules, there is a __shared-config__ folder and, currently, two terraform modules __oke__ and __k8s__. __oke__ creates the required infrastructure in the oracle cloud and __k8s__ installs an ingress controller and sets up a load balancer to enable inbound traffic. It also contains optional scripts to help with https and dns. Use the __Deploy-Module.ps1__ script to deploy the modules (see sample below).
 
 ## Getting Started
 Assuming that all prerequisites are met, follow these steps:
