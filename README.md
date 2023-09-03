@@ -5,9 +5,12 @@ A bunch of **very opinionated** terraform modules and helper scripts to set up a
 * terraform
 * powershell
 * kubectl (optional)
+* az cli & azure account (optional)
 
-## Repository Structure
-Under terraform modules, there is a __shared-config__ folder and, currently, two terraform modules __oke__ and __k8s__. __oke__ creates the required infrastructure in the oracle cloud and __k8s__ installs an ingress controller and sets up a load balancer to enable inbound traffic. It also contains optional scripts to help with https and dns. Use the __Deploy-Module.ps1__ script to deploy the modules (see sample below).
+## Modules
+* __oke__: Creates a kubernetes cluster and the required networking infrastructure in the oracle cloud
+* __k8s__: Installs an ingress controller and sets up a load balancer to enable inbound traffic for the cluster created in __oke__. It also contains optional scripts to help with https and dns.
+* __azure-pinger__: Sets up an automation job in azure to constantly ping the kubernetes cluster, aims to generate network traffic to prevent the cluster from staying idle, because oracle reclaims idle instances.
 
 ## Getting Started
 Assuming that all prerequisites are met, follow these steps:
@@ -39,4 +42,10 @@ Assuming that all prerequisites are met, follow these steps:
     # Browse to https://sample.${top_level_domain} afterwards
     # This requires a dns entry to be available
     & kubectl apply -f "./outputs/sample-ingress-app.yaml"
+```
+* (Optional) deploy the __azure-pinger__ module to generate traffic and prevent the instances in oci from going idle
+```ps1
+    # Requires an azure account and the az cli to be installed
+    # the script will authenticate interactively with "az login"
+    & Deploy-Module.ps1 -Module azure-pinger
 ```
